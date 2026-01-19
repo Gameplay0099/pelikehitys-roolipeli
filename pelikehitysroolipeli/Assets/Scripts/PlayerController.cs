@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,10 +9,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float moveSpeed;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         lastMovement = Vector2.zero;
         rb = GetComponent<Rigidbody2D>();
+
+        Button openbutton = GameObject.Find("OpenButton").GetComponent<Button>();
+        openbutton.onClick.AddListener(OnOpenButton);
+    }
+
+    void OnOpenButton()
+    {
+        Debug.Log("Open button was pressed");
     }
 
     // Update is called once per frame
