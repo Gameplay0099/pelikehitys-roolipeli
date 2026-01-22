@@ -1,6 +1,23 @@
+using System;
+using System.Linq;
+using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+public enum DoorStates
+{
+    Open,
+    Closed,
+    Locked
+}
+public enum Actions
+{
+    Open,
+    Close,
+    Lock,
+    Unlock
+}
 public class DoorController : MonoBehaviour
 {
     // Kuvat oven eri tiloille
@@ -28,6 +45,7 @@ public class DoorController : MonoBehaviour
     [SerializeField]
     int DebugFontSize = 32;
 
+    DoorStates doorState = DoorStates.Locked;
 
     void Start()
     {
@@ -48,12 +66,54 @@ public class DoorController : MonoBehaviour
          // missä tilassa ovi on kun peli alkaa?
     }
 
+
     /// <summary>
     /// Oveen kohdistuu jokin toiminto joka muuttaa sen tilaa
     /// </summary>
-    public void ReceiveAction()
+    public void ReceiveAction(Actions action)
     {
-        
+        string[] toiminnot = Enum.GetNames(typeof(Actions));
+        for (int i = 0; i < toiminnot.Length; i++)
+        {
+            if (action.ToString().ToLower() == toiminnot[i].ToLower())
+            {
+                switch (action)
+                {
+                    case Actions.Open:
+                        {
+                            if(doorState == DoorStates.Closed)
+                            {
+                                OpenDoor();
+                            }
+                            break;
+                        }
+                    case Actions.Close:
+                        {
+                            if (doorState == DoorStates.Open)
+                            {
+                                CloseDoor();
+                            }
+                            break;
+                        }
+                    case Actions.Lock:
+                        {
+                            if (doorState == DoorStates.Closed)
+                            {
+                                LockDoor();
+                            }
+                            break;
+                        }
+                    case Actions.Unlock:
+                        {
+                            if (doorState == DoorStates.Locked)
+                            {
+                                UnlockDoor();
+                            }
+                            break;
+                        }
+                }
+            }
+        }
     }
 
     // Kun tulee toiminto, sen perusteella kutsutaan jotakin
@@ -67,6 +127,7 @@ public class DoorController : MonoBehaviour
     {
         doorSprite.sprite = OpenDoorSprite;
         colliderComp.isTrigger = true;
+        doorState = DoorStates.Open;
     }
 
     /// <summary>
@@ -77,6 +138,7 @@ public class DoorController : MonoBehaviour
     {
         doorSprite.sprite = ClosedDoorSprite;
         colliderComp.isTrigger = false;
+        doorState = DoorStates.Closed;
     }
 
     /// <summary>
@@ -87,6 +149,7 @@ public class DoorController : MonoBehaviour
     {
         lockSprite.sprite = LockedSprite;
         lockSprite.color = lockedColor;
+        doorState = DoorStates.Locked;
     }
 
     /// <summary>
@@ -97,6 +160,7 @@ public class DoorController : MonoBehaviour
     {
         lockSprite.sprite = UnlockedSprite;
         lockSprite.color = openColor;
+        doorState = DoorStates.Closed;
     }
 
     // *********************************
