@@ -1,6 +1,39 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+
+public enum NuolenKärki
+{
+    Puu,
+    Teräs,
+    Timantti
+}
+public enum NuolenSulka
+{
+    Lehti,
+    Kanansulka,
+    Kotkansulka
+}
+public enum Paaraaka_aine
+{
+    Nautaa,
+    Kanaa,
+    Kasviksia
+}
+public enum Lisuke
+{
+    Perunaa,
+    Riisiä,
+    Pastaa
+}
+public enum Kastike
+{
+    Curry,
+    Hapanimelä,
+    Pippuri,
+    Chili
+}
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,21 +43,21 @@ public class PlayerController : MonoBehaviour
     float moveSpeed;
 
     DoorController doorController;
+    PlayerShoppingController playerShoppingController;
 
     [SerializeField]
-    GameObject uiCanvas;
+    GameObject doorButtons;
+
     //[SerializeField]
-    //Button openButton;
-    //[SerializeField]
-    //Button closeButton;
-    //[SerializeField]
-    //Button lockButton;
-    //[SerializeField]
-    //Button unlockButton;
+    //GameObject merchantButtons;
+
+    //GameObject option3;
+    //GameObject slider;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    
     void Start()
     {
+        playerShoppingController = transform.GetComponent<PlayerShoppingController>();
         lastMovement = Vector2.zero;
         rb = GetComponent<Rigidbody2D>();
 
@@ -42,7 +75,12 @@ public class PlayerController : MonoBehaviour
         Button unlockbutton = GameObject.Find("UnlockButton").GetComponent<Button>();
         unlockbutton.onClick.AddListener(OnUnlockButton);
 
-        uiCanvas.SetActive(false);
+        //option3 = GameObject.Find("Option3");
+        //slider = GameObject.Find("SliderText");
+        
+
+        doorButtons.SetActive(false);
+        //merchantButtons.SetActive(false);
     }
 
     void OnOpenButton()
@@ -81,16 +119,25 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Door"))
         {
             doorController = collision.GetComponent<DoorController>();
-            uiCanvas.SetActive(true);
+            doorButtons.SetActive(true);
         }
         else if (collision.CompareTag("Merchant"))
         {
-            Debug.Log("Found Merchant");
+            if (collision.name == "ArrowMerchant")
+            {
+                playerShoppingController.StartShopping(PlayerShoppingController.MerchantType.ArrowMerchant);
+            }
+            else if (collision.name == "FoodMerchant")
+            {
+                playerShoppingController.StartShopping(PlayerShoppingController.MerchantType.FoodMerchant);
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        uiCanvas.SetActive(false);
+        doorButtons.SetActive(false);
+        //merchantButtons.SetActive(false);
+        playerShoppingController.EndShopping();
     }
 
     void OnMoveAction(InputValue value)
