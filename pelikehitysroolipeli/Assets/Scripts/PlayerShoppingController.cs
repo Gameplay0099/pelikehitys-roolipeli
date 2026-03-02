@@ -158,7 +158,7 @@ public class PlayerShoppingController : MonoBehaviour
             // Oletusnuoli, ellei pelaaja vaihda osia
             valittuKärki = Nuolenkärki.Puu;
             valittuSulka = Nuolensulka.Lehti;
-            nuolenPituus = 60;
+            nuolenPituus = 0.60f;
 
             // Päivitä hinta vastaamaan oletusaterian hintaa
             UpdatePrice();
@@ -255,23 +255,23 @@ public class PlayerShoppingController : MonoBehaviour
             price += valittuPää switch
             {
                 Pääraaka_aine.Nautaa => 10,
-                Pääraaka_aine.Kanaa => 5,
+                Pääraaka_aine.Kanaa => 6,
                 Pääraaka_aine.Kasviksia => 3,
                 _ => 0
             };
             price += valittuLisuke switch
             {
                 Lisuke.Perunaa => 7,
-                Lisuke.Riisiä => 2,
+                Lisuke.Riisiä => 3,
                 Lisuke.Pastaa => 5,
                 _ => 0
             };
-            price += valittuKastike switch
+            price = valittuKastike switch
             {
-                Kastike.Curry => 3,
-                Kastike.Hapanimelä => 2,
-                Kastike.Pippuri => 4,
-                Kastike.Chili => 1,
+                Kastike.Curry => Convert.ToInt32(price*1.1),
+                Kastike.Hapanimelä => Convert.ToInt32(price * 1.2),
+                Kastike.Pippuri => Convert.ToInt32(price * 1.25),
+                Kastike.Chili => Convert.ToInt32(price * 1.33),
                 _ => 0
             };
         }
@@ -309,7 +309,7 @@ public class PlayerShoppingController : MonoBehaviour
             else if (merchantType == MerchantType.FoodMerchant)
             {
                 // Increase player's hp depending on the type of food bought
-                addedHP = price / 4;
+                addedHP = price / 3;
                 playerData.MuunnaArvoa(addedHP, "hp");
             }
         }
