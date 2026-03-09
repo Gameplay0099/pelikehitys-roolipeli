@@ -74,6 +74,9 @@ public class PlayerShoppingController : MonoBehaviour
     int price = 1;
     int addedHP = 0;
     PlayerDataManager playerData = PlayerDataManager.Instance;
+    AudioManager audioManager = AudioManager.Instance;
+    float sliderSoundCooldown = 0.0f;
+    bool isSlider = false;
 
     private void Start()
     {
@@ -95,6 +98,11 @@ public class PlayerShoppingController : MonoBehaviour
 
         // Piilota paneeli
         merchantPanel.SetActive(false);
+    }
+
+    private void FixedUpdate()
+    {
+        sliderSoundCooldown -= Time.deltaTime;
     }
 
     /// <summary>
@@ -243,12 +251,19 @@ public class PlayerShoppingController : MonoBehaviour
         Slider sl1 = GetSlider(merchantPanel, "Slider");
         nuolenPituus = sl1.value;
         arrowLengthText.text = $"{Convert.ToInt32(nuolenPituus*100)} cm";
+        isSlider = true;
         UpdatePrice();
     }
 
     // T‰m‰ funktio p‰ivitt‰‰ n‰kyviss‰ olevan hinnan
     private void UpdatePrice()
     {
+        if (!isSlider || isSlider && sliderSoundCooldown <= 0)
+        {
+            audioManager.PlaySound(AudioManager.SoundEffects.Select);
+            sliderSoundCooldown = 0.2f;
+        }
+        isSlider = false;
         price = 0;
         if (merchantType == MerchantType.FoodMerchant)
         {
@@ -312,10 +327,11 @@ public class PlayerShoppingController : MonoBehaviour
                 addedHP = price / 3;
                 playerData.MuunnaArvoa(addedHP, "hp");
             }
+            audioManager.PlaySound(AudioManager.SoundEffects.BuyItem);
         }
         else
         {
-            
+            audioManager.PlaySound(AudioManager.SoundEffects.InvalidAction);
         }
     }
 

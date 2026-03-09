@@ -47,6 +47,8 @@ public class DoorController : MonoBehaviour
 
     DoorStates doorState = DoorStates.Locked;
 
+    AudioManager audioManager = AudioManager.Instance;
+
     void Start()
     {
         doorSprite = GetComponent<SpriteRenderer>();
@@ -83,7 +85,12 @@ public class DoorController : MonoBehaviour
                         {
                             if(doorState == DoorStates.Closed)
                             {
+                                audioManager.PlaySound(AudioManager.SoundEffects.OpenDoor);
                                 OpenDoor();
+                            }
+                            else
+                            {
+                                audioManager.PlaySound(AudioManager.SoundEffects.InvalidAction);
                             }
                             break;
                         }
@@ -93,6 +100,10 @@ public class DoorController : MonoBehaviour
                             {
                                 CloseDoor();
                             }
+                            else
+                            {
+                                audioManager.PlaySound(AudioManager.SoundEffects.InvalidAction);
+                            }
                             break;
                         }
                     case Actions.Lock:
@@ -101,6 +112,10 @@ public class DoorController : MonoBehaviour
                             {
                                 LockDoor();
                             }
+                            else
+                            {
+                                audioManager.PlaySound(AudioManager.SoundEffects.InvalidAction);
+                            }
                             break;
                         }
                     case Actions.Unlock:
@@ -108,6 +123,10 @@ public class DoorController : MonoBehaviour
                             if (doorState == DoorStates.Locked)
                             {
                                 UnlockDoor();
+                            }
+                            else
+                            {
+                                audioManager.PlaySound(AudioManager.SoundEffects.InvalidAction);
                             }
                             break;
                         }

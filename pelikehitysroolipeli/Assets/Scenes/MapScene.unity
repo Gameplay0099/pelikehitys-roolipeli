@@ -794,8 +794,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f21d7efbe47ab7f4ab4975af0d67ee6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  music: {fileID: 0}
+  soundEffectPlayer: {fileID: 1731571205}
+  musicPlayer: {fileID: 250834328}
   hitWall: {fileID: 8300000, guid: 0dc8eb0b0878eec4cba01385b94713b9, type: 3}
-  invalidAction: {fileID: 0}
+  invalidAction: {fileID: 8300000, guid: fe50a5a2293d5db4f9ed531c0961ae4a, type: 3}
+  walk: {fileID: 8300000, guid: 77525a14104e8484eb355277a7669bbc, type: 3}
+  buyItem: {fileID: 8300000, guid: cb03a88558498104591438080cee4884, type: 3}
+  findMerchant: {fileID: 8300000, guid: 0c0214ed0570a434f9f0415993fec5e2, type: 3}
+  select: {fileID: 8300000, guid: dab53628d0d4d3741992b83faa051afb, type: 3}
+  openDoor: {fileID: 8300000, guid: cc86f62c1d431804db4509ec3cd9dc74, type: 3}
+  moonspire: {fileID: 8300000, guid: 05e0137baadb5884b8accbcb3be12315, type: 3}
+  windsOfValor: {fileID: 8300000, guid: c5dae4c684c9db44daf1a5d967ee58e1, type: 3}
+  darkwoodPath: {fileID: 8300000, guid: 347359f76440991488260e96c801a834, type: 3}
+  frostbound: {fileID: 8300000, guid: b2742c6c6febb914ba5c49a933332deb, type: 3}
+  emberlight: {fileID: 8300000, guid: 0388a3460cc96db438c33c8e98a0377b, type: 3}
+  silverbrook: {fileID: 8300000, guid: 29537864bee0dfd49a70c376f8664cf1, type: 3}
+  mysticGrove: {fileID: 8300000, guid: 6d6a362940b496845b4ad925da26c8ec, type: 3}
+  throneOfStorms: {fileID: 8300000, guid: cdbb971f91bb1cd439753b32eba690f1, type: 3}
+  sorrowsEdge: {fileID: 8300000, guid: 64d227f60d693734f953b760eb980f89, type: 3}
+  elvenDawn: {fileID: 8300000, guid: c0e9d4375711a86458783edb0066ca28, type: 3}
 --- !u!4 &250834327
 Transform:
   m_ObjectHideFlags: 0
@@ -10673,7 +10691,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2021990631327722602, guid: 75e2cbd47b53d4348a3c9ed09c3ddde2, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 77525a14104e8484eb355277a7669bbc, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

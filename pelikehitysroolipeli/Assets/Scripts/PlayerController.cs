@@ -44,10 +44,12 @@ public class PlayerController : MonoBehaviour
 
     DoorController doorController;
     PlayerShoppingController playerShoppingController;
+    AudioManager audioManager = AudioManager.Instance;
 
     [SerializeField]
     GameObject doorButtons;
 
+    float walkSoundCooldown = 0.0f;
     //[SerializeField]
     //GameObject merchantButtons;
 
@@ -109,8 +111,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         rb.MovePosition(rb.position + lastMovement * moveSpeed * Time.fixedDeltaTime);
+        walkSoundCooldown -= Time.deltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -131,6 +133,11 @@ public class PlayerController : MonoBehaviour
             {
                 playerShoppingController.StartShopping(PlayerShoppingController.MerchantType.FoodMerchant);
             }
+            audioManager.PlaySound(AudioManager.SoundEffects.FindMerchant);
+        }
+        else
+        {
+            audioManager.PlaySound(AudioManager.SoundEffects.PlayerHitWall);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -144,5 +151,19 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 v = value.Get<Vector2>();
         lastMovement = v;
-    }    
+
+        if (v != Vector2.zero)
+        {
+            audioManager.PlaySound(AudioManager.SoundEffects.Walk);
+        }
+        else
+        {
+            audioManager.TurnOffLoop();
+        }
+    }
+
+    void OnMusicToggle()
+    {
+        audioManager.ToggleMusic(AudioManager.Music.mysticGrove);
+    }
 }
