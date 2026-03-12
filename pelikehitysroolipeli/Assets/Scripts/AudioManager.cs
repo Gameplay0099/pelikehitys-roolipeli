@@ -106,6 +106,16 @@ public class AudioManager : MonoBehaviour
         soundEffectPlayer.loop = false;
     }
 
+    public bool GetSoundPlayerLoopStatus()
+    {
+        return soundEffectPlayer.loop;
+    }
+
+    public float GetWalkSoundLength()
+    {
+        return walk.length;
+    }
+
     public void ToggleMusic(Music music)
     {
         switch (music)

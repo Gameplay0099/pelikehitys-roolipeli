@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject doorButtons;
 
-    float walkSoundCooldown = 0.0f;
+    float walkSoundCooldown = 0.1f;
     //[SerializeField]
     //GameObject merchantButtons;
 
@@ -154,7 +154,11 @@ public class PlayerController : MonoBehaviour
 
         if (v != Vector2.zero)
         {
-            audioManager.PlaySound(AudioManager.SoundEffects.Walk);
+            if (!audioManager.GetSoundPlayerLoopStatus() && walkSoundCooldown <= 0)
+            {
+                audioManager.PlaySound(AudioManager.SoundEffects.Walk);
+                walkSoundCooldown = audioManager.GetWalkSoundLength();
+            }
         }
         else
         {
