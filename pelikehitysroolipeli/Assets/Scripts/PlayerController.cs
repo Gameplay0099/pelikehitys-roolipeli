@@ -45,16 +45,12 @@ public class PlayerController : MonoBehaviour
     DoorController doorController;
     PlayerShoppingController playerShoppingController;
     AudioManager audioManager = AudioManager.Instance;
+    Reppu reppu;
 
     [SerializeField]
     GameObject doorButtons;
 
     float walkSoundCooldown = 0.1f;
-    //[SerializeField]
-    //GameObject merchantButtons;
-
-    //GameObject option3;
-    //GameObject slider;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
